@@ -56,6 +56,7 @@ TasksScheduler::~TasksScheduler() {
 
 void TaskScheduler::runTask()
 {
+    int count = 0;
     while(running) {
         std::unique_lock<std::mutex> lock(mtx);
 
@@ -67,7 +68,21 @@ void TaskScheduler::runTask()
             // Handle task failure
             std::cerr << "Task failed: " << e.what() << std::endl;
         }
+        if (count >= countLimit) {
+            running = false;
+        }
+        count++;
     }
+}
+
+void TaskScheduler::setCountLimit(int countLimit)
+{
+    this->countLimit = countLimit;
+}
+
+int TaskScheduler::getCountLimit()
+{
+    return countLimit;
 }
 
 void TaskScheduler::stopScheduler()

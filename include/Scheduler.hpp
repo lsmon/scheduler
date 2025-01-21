@@ -53,8 +53,21 @@ private:
 
     void runTask();
 
+    int countLimit;
+
+    std::chrono::system_clock::time_point execTime;
+
 public:
-    explicit TaskScheduler(Task *task, const int interval = 60) : task(std::move(task)), TasksScheduler(interval) {}
+    explicit TaskScheduler(Task *task, const int interval = 60) : task(std::move(task)), execTime{}, TasksScheduler(interval) {}
+
+    explicit TaskScheduler(Task *task, std::chrono::system_clock::time_point execTime, const int interval = 60) : task(std::move(task)), execTime(std::move(execTime)), TasksScheduler(interval) {
+
+        countLimit = std::chrono::duration_cast<std::chrono::seconds>(execTime.time_since_epoch() - std::chrono::system_clock::now().time_since_epoch()).count() / interval;
+    }
+
+    void setCountLimit(int countLimit);    
+    
+    int getCountLimit();
 
     void stopScheduler();
 

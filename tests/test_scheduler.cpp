@@ -40,19 +40,20 @@ void runTests() {
 }
 
 void runTest() {
-    TaskScheduler scheduler(new PrintTask(), 3);
+    TaskScheduler scheduler(new PrintTask(), std::chrono::system_clock::now() + std::chrono::seconds(30), 3);
     scheduler.startScheduler();
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(60)); // Give time for tasks to complete
+    std::this_thread::sleep_for(std::chrono::milliseconds(20)); // Give time for tasks to complete
 
-    scheduler.stopScheduler();
-    // if (counter == 2) {
-        std::cout << "Test Passed: Basic Scheduling\n";
+    if (scheduler.isRunning())
+        scheduler.stopScheduler();
+    
+    std::cout << "Test Passed: Basic Scheduling\n";
 }
 
 int main(int argc, char **argv) {
-    runTests();
-    // runTest();
+    // runTests();
+    runTest();
 
     return EXIT_SUCCESS;
 }
