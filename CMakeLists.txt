@@ -15,7 +15,9 @@ set(INC include/Task.hpp
         include/Scheduler.hpp)
 set(SRC sources/Scheduler.cpp)
 
-add_library(_${PROJECT_NAME} STATIC ${INC} ${SRC})
+set(LIB_NAME _${PROJECT_NAME}-${PROJECT_VERSION})
+
+add_library(${LIB_NAME} STATIC ${INC} ${SRC})
 
 include(cpack/cpack.cmake)
 include(tests/tests.cmake)
