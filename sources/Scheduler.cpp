@@ -85,4 +85,3 @@ TaskScheduler::~TaskScheduler()
 {
     running = false;
 }
-
