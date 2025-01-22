@@ -4,8 +4,6 @@ void TasksScheduler::runTasks() {
     while (running) {
         std::unique_lock<std::mutex> lock(mtx);
 
-        cv.wait_for(lock, std::chrono::seconds(interval), [this] {return taskQueue.empty(); });
-
         if (!taskQueue.empty()) {
             auto task = taskQueue.front();
 
@@ -22,6 +20,8 @@ void TasksScheduler::runTasks() {
             std::cout << "Task queue empty (SZ: " << taskQueue.size() << ")" << std::endl;
             stopScheduler();
         }
+
+        cv.wait_for(lock, std::chrono::seconds(interval), [this] {return taskQueue.empty(); });
     }
 }
 
