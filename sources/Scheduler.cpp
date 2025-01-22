@@ -59,8 +59,6 @@ void TaskScheduler::runTask()
     int count = 0;
     while(running) {
         std::unique_lock<std::mutex> lock(mtx);
-
-        cv.wait_for(lock, std::chrono::seconds(interval));
             
         try {
             task->run();
@@ -72,6 +70,7 @@ void TaskScheduler::runTask()
             running = false;
         }
         count++;
+        cv.wait_for(lock, std::chrono::seconds(interval));
     }
 }
 
