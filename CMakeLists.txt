@@ -19,5 +19,5 @@ set(LIB_NAME _${PROJECT_NAME}-${PROJECT_VERSION})
 
 add_library(${LIB_NAME} STATIC ${INC} ${SRC})
 
-include(cpack/cpack.cmake)
-include(tests/tests.cmake)
+include(cpack/CMakeLists.txt)
+include(tests/CMakeLists.txt)
