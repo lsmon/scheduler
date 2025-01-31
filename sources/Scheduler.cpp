@@ -66,7 +66,7 @@ void TaskScheduler::runTask()
             // Handle task failure
             std::cerr << "Task failed: " << e.what() << std::endl;
         }
-        if (count >= countLimit) {
+        if (count >= countLimit && countLimit > 0) {
             running = false;
         }
         count++;
